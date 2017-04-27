@@ -61,7 +61,7 @@
 		      </ul>
 		      <form class="navbar-form navbar-left">
 		        <div class="form-group">
-		          <input type="text" class="form-control" placeholder="Search">
+		          <input type="text" class="form-control" placeholder="#Search">
 		        </div>
 		        <button type="submit" class="btn btn-success">Submit</button>
 		      </form>
@@ -136,12 +136,12 @@
     		// print them one after another
     		echo "<div class='container'>";
             echo "<div class='panel panel-default'>";
-            echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>Countries And Animals</font></h3></div>";
+            echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>New Tweets:</font></h3></div>";
             echo "<table class='table table-hover'>";
             echo "<div class='list-group'>";
             while($row = mysqli_fetch_row($result)) {
                 echo "<tr>";
-                echo "<td>".$row[0]."</td>";
+                echo "<td>".$row[3]."</td>";
                 echo "<td>" . $row[1]."</td>";
                 echo "<td>".$row[2]."</td>";
                 echo "<td><a class='btn btn-danger' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
@@ -162,13 +162,14 @@
 		mysqli_free_result($connection,$result);
 
 		// set variable values to HTML form inputs
+		$name = $arr[1];
 		$country = $_POST['country'];
         $animal = $_POST['animal'];
         
         // check to see if user has entered anything
         if ($animal != "") {
             // build SQL query
-            $query = "INSERT INTO symbols (country, animal) VALUES ('$country', '$animal')";
+            $query = "INSERT INTO symbols (Name, country, animal) VALUES ('$name', '$country', '$animal')";
             // run the query
             $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
             // refresh the page to show new update

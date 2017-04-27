@@ -163,34 +163,34 @@
 
 		// set variable values to HTML form inputs
 		$country = $_POST['country'];
-    	$animal = $_POST['animal'];
-		
-		// check to see if user has entered anything
-		if ($animal != "") {
-	 		// build SQL query
-			$query = "INSERT INTO symbols (country, animal) VALUES ('$country', '$animal')";
-			// run the query
-     		$result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
-			// refresh the page to show new update
-	 		echo "<meta http-equiv='refresh' content='0'>";
-		}
+        $animal = $_POST['animal'];
+        
+        // check to see if user has entered anything
+        if ($animal != "") {
+            // build SQL query
+            $query = "INSERT INTO symbols (country, animal) VALUES ('$country', '$animal')";
+            // run the query
+            $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
+            // refresh the page to show new update
+            echo "<meta http-equiv='refresh' content='0'>";
+        }
 		
 		// if DELETE pressed, set an id, if id is set then delete it from DB
 		if (isset($_GET['id'])) {
 
-			// create query to delete record
-			echo $_SERVER['PHP_SELF'];
-    		$query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
+            // create query to delete record
+            echo $_SERVER['PHP_SELF'];
+            $query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
 
-			// run the query
-     		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysqli_error());
-			
-			// reset the url to remove id $_GET variable
-			$location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			exit;
-			
-		}
+            // run the query
+            $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
+            
+            // reset the url to remove id $_GET variable
+            $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+            echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+            exit;
+            
+        }
 		
 		// close connection
 		mysqli_close($connection);
@@ -200,15 +200,15 @@
 
     <!-- This is the HTML form that appears in the browser -->
    	<br>
-   	<form class="form-inline">
+   	<div class="form-inline">
 	   	<div class="container">
 	        <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-	            <input class='form-control' placeholder='Country' type="text" name="country">
-	            <input class='form-control' placeholder='National Animal' type="text" name="animal">
+	            <input class='form-control' placeholder='Your Tweet Here' type="text" name="country">
+	            <input class='form-control' placeholder='Your Hashtags Here' type="text" name="animal">
 	            <input class='btn btn-success' type="submit" name="submit">
 	        </form>
 	    </div>
-	</form>
+	</div>
     <br>
     <center>
     	<form action="logout.php" method="post"><button class="btn btn-danger">Logout</button></form>

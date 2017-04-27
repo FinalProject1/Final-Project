@@ -203,8 +203,8 @@
    	<form class="form-inline">
 	   	<div class="container">
 	        <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-	            <input class='form-control' placeholder='Country' type="text" name="country">
-	            <input class='form-control' placeholder='National Animal' type="text" name="animal">
+	            <input class='form-control' placeholder='Your Tweet Here' type="text" name="country">
+	            <input class='form-control' placeholder='Your Hashtags Here' type="text" name="animal">
 	            <input class='btn btn-success' type="submit" name="submit">
 	        </form>
 	    </div>

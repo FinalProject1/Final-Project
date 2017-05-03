@@ -28,6 +28,29 @@
 			}
 		</style>
 
+		<script>
+			function myFunction() {
+			  // Declare variables 
+			  var input, filter, table, tr, td, i;
+			  input = document.getElementById("filter");
+			  filter = input.value.toUpperCase();
+			  table = document.getElementById("myTable");
+			  tr = table.getElementsByTagName("tr");
+
+			  // Loop through all table rows, and hide those who don't match the search query
+			  for (i = 0; i < tr.length; i++) {
+			    td = tr[i].getElementsByTagName("td")[2];
+			    if (td) {
+			      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+			        tr[i].style.display = "";
+			      } else {
+			        tr[i].style.display = "none";
+			      }
+			    } 
+			  }
+			}
+		</script>
+
 		<nav class="navbar navbar-inverse navbar-static-top">
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
@@ -61,9 +84,8 @@
 		      </ul>
 		      <form class="navbar-form navbar-left">
 		        <div class="form-group">
-		          <input type="text" class="form-control" placeholder="#Search">
+		          <input type="text" class="form-control" placeholder="#Search" id="filter" onkeyup="myFunction()">
 		        </div>
-		        <button type="submit" class="btn btn-success">Submit</button>
 		      </form>
 		      <ul class="nav navbar-nav navbar-right">
 		        <li><a href="#">Link</a></li>
@@ -137,7 +159,7 @@
     		echo "<div class='container'>";
             echo "<div class='panel panel-default'>";
             echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>New Tweets:</font></h3></div>";
-            echo "<table class='table table-hover'>";
+            echo "<table class='table table-hover' id='myTable'>";
             echo "<div class='list-group'>";
             while($row = mysqli_fetch_row($result)) {
                 echo "<tr>";
@@ -165,9 +187,17 @@
 		$name = $arr[1];
 		$country = $_POST['country'];
         $animal = $_POST['animal'];
+        $search = $_POST['filter'];
         
         // check to see if user has entered anything
-        if ($animal != "") {
+        if ($search != "") {
+            // build SQL query
+            $query = "SELECT * FROM symbols where animal like filter%";
+            // run the query
+            $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
+            // refresh the page to show new update
+            echo "<meta http-equiv='refresh' content='0'>";
+        } else if ($animal != "") {
             // build SQL query
             $query = "INSERT INTO symbols (Name, country, animal) VALUES ('$name', '$country', '$animal')";
             // run the query
@@ -176,6 +206,7 @@
             echo "<meta http-equiv='refresh' content='0'>";
         }
 		
+
 		// if DELETE pressed, set an id, if id is set then delete it from DB
 		if (isset($_GET['id'])) {
 

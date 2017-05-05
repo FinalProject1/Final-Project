@@ -12,6 +12,7 @@
 	    <!--Let browser know website is optimized for mobile-->
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script type="text/javascript" src="search.js"></script>
+		<script type="text/javascript" src="split.js"></script>
 		
 		<div class="navbar-fixed">   
 			<nav>
@@ -31,7 +32,7 @@
     <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
-     
+      
 
 	<?php
 		
@@ -77,7 +78,6 @@
 
 		// see if any rows were returned
 		if (mysqli_num_rows($result) > 0) {
-
     		// print them one after another
     		echo "<div class='container'>";
             echo "<div class='panel panel-default'>";
@@ -97,7 +97,13 @@
                 echo "<tr>";
                 echo "<td>".$row[3]."</td>";
                 echo "<td>" . $row[1]."</td>";
-                echo "<td><div class='chip'>".$row[2]."</div></td>";
+                $hashtags = explode(" ", $row[2]);
+                echo "<td>";
+                for ($i = 0; $i < sizeof($hashtags); $i++) {
+					echo "<div class='chip'>".$hashtags[$i]."</div>";
+
+				}
+                echo "</td>";
                 echo "<td><a class='btn btn-danger' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
                 echo "</tr>";
             }
@@ -176,9 +182,10 @@
 	            </div>
 	            <label class="label-icon" for="hashtag"><i class="material-icons">turned_in_not</i></label>
 	            <div class='input-field'>
-	            <div name='animal' id='hashtag' class='chips'>
-<!-- 	            <input id='hashtag' class='form-control' type="text" name="animal"> -->
-	            </div>
+<!-- 	            <div name='animal' id='hashtag' class='chips'> -->
+	            <input id='hashtag' class='form-control' type="text" name="animal">
+<!-- 	            </div> -->
+				<label for='hashtag'>Your Hashtags Here (Seperate By Space)</label>
 	            <input class='btn btn-success' type="submit" name="submit">
 	            </div>
 	        </form>

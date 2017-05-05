@@ -4,98 +4,44 @@
 		
 
 		<!--Import Google Icon Font-->
-	    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" type="text/css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="supplement.css">
 	    <!--Import materialize.css-->
 	    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
 	    <!--Let browser know website is optimized for mobile-->
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-		<style>
-			h3 { 
-			    display: block;
-			    font-size: 3em;
-			    margin-top: 1em;
-			    margin-bottom: 1em;
-			    margin-left: 0;
-			    margin-right: 0;
-			    font-weight: bold;
-			}
-			h4 { 
-			    display: block;
-			    font-size: 8em;
-			    margin-top: 1em;
-			    margin-bottom: 1em;
-			    margin-left: 0;
-			    margin-right: 0;
-			    font-weight: bold;
-			}
-		</style>
-
-		<script>
-			function myFunction() {
-			  // Declare variables 
-			  var input, filter, table, tr, td, i;
-			  input = document.getElementById("filter");
-			  filter = input.value.toUpperCase();
-			  table = document.getElementById("myTable");
-			  tr = table.getElementsByTagName("tr");
-
-			  // Loop through all table rows, and hide those who don't match the search query
-			  for (i = 0; i < tr.length; i++) {
-			    td = tr[i].getElementsByTagName("td")[2];
-			    if (td) {
-			      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-			        tr[i].style.display = "";
-			      } else {
-			        tr[i].style.display = "none";
-			      }
-			    } 
-			  }
-			}
-		</script>
-		   
-			<nav class="nav-extended">
-			    <div class="nav-wrapper">
-					
-			    	<a href="#" class="brand-logo">Logo</a>
-			    	<ul id="nav-mobile" class="right hide-on-med-and-down">
-			        	<li><a href="sass.html">Sass</a></li>
-			        	<li><a href="badges.html">Components</a></li>
-			        	<li><a href="collapsible.html">JavaScript</a></li>
-			    	</ul>
-				</div>
-				<div class="nav-wrapper">
-      				<form>
-        				<div class="input-field">
-          					<input id="search" type="search" required>
-          					<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-          					<i class="material-icons">close</i>
-        				</div>
-      				</form>
-    			</div>
+		<script type="text/javascript" src="search.js"></script>
+		
+		<div class="navbar-fixed">   
+			<nav>
+		    	<div class="nav-wrapper">
+		      		<form>
+		        		<div class="input-field">
+		          		<input id="filter" type="search" placeholder="Search Hashtags" onkeyup="myFunction()" required>
+		          		<label class="label-icon" for="filter"><i class="material-icons">search</i></label>
+		          		<i class="material-icons">close</i>
+		        		</div>
+		      		</form>
+		    	</div>
 			</nav>
+		</div>
 	</head>
 	<body>
     <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
      
-    
-      <div class="input-field col s6">
-          <input id="filter" type="text" class="validate">
-          <label for="filter">#Search</label>
-      </div>
 
 	<?php
-	
+		
 	    // pass in some info;
 		require("common.php"); 
 		
 		if(empty($_SESSION['user'])) { 
   
 			// If they are not, we redirect them to the login page. 
-			$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+			$location = "http://" . $_SERVER['HTTP_HOST'] . "Final-Project/login.php";
 			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
 			//exit;
          
@@ -106,7 +52,7 @@
 		
 		// To access $_SESSION['user'] values put in an array, show user his username
 		$arr = array_values($_SESSION['user']);
-		echo "<br><br><br>";
+		echo "<br>";
 		echo "<center>";
 		echo "<h3 class='panel-title'>";
 		echo "<font size='8' color='black'>Welcome " . $arr[1] . "</font>";
@@ -115,7 +61,6 @@
 
 		echo "<br>";
 		
-
 
 
 		// open connection
@@ -137,16 +82,26 @@
     		echo "<div class='container'>";
             echo "<div class='panel panel-default'>";
             echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>New Tweets:</font></h3></div>";
-            echo "<table class='table table-hover' id='myTable'>";
+            echo "<table class='highlight' class='responsive-table striped' id='myTable'>";
+            echo "<thead>
+				      <tr>
+				          <th data-field='sn'>Username</th>
+				          <th data-field='name'>Tweet</th>
+				          <th data-field='address'>Hashtags</th>
+				          <th data-field='email'>Delete</th>
+				      </tr>
+				    </thead>";
             echo "<div class='list-group'>";
+            echo "<tbody>";
             while($row = mysqli_fetch_row($result)) {
                 echo "<tr>";
                 echo "<td>".$row[3]."</td>";
                 echo "<td>" . $row[1]."</td>";
-                echo "<td>".$row[2]."</td>";
+                echo "<td><div class='chip'>".$row[2]."</div></td>";
                 echo "<td><a class='btn btn-danger' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
                 echo "</tr>";
             }
+            echo "</tbody>";
             echo "</div>";
             echo "</table>";
             echo "</div>";
@@ -205,6 +160,7 @@
 		// close connection
 		mysqli_close($connection);
 
+
 	?>
    
 
@@ -213,9 +169,18 @@
    	<div class="form-inline">
 	   	<div class="container">
 	        <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-	            <input class='form-control' placeholder='Your Tweet Here' type="text" name="country">
-	            <input class='form-control' placeholder='Your Hashtags Here' type="text" name="animal">
+	        	<label class="label-icon" for="tweet"><i class="material-icons">forum</i></label>
+	        	<div class='input-field'>
+	            <input id='tweet' class='form-control' type="text" name="country">
+	            <label for='tweet'>Your Tweet Here</label>
+	            </div>
+	            <label class="label-icon" for="hashtag"><i class="material-icons">turned_in_not</i></label>
+	            <div class='input-field'>
+	            <div name='animal' id='hashtag' class='chips'>
+<!-- 	            <input id='hashtag' class='form-control' type="text" name="animal"> -->
+	            </div>
 	            <input class='btn btn-success' type="submit" name="submit">
+	            </div>
 	        </form>
 	    </div>
 	</div>
@@ -225,4 +190,5 @@
     </center>
     
 	</body>
+	<script>$('.chips').material_chip();</script>
 </html>

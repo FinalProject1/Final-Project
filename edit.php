@@ -85,10 +85,12 @@
             echo "<table class='highlight' class='responsive-table striped' id='myTable'>";
             echo "<thead>
 				      <tr>
-				          <th data-field='sn'>Username</th>
-				          <th data-field='name'>Tweet</th>
-				          <th data-field='address'>Hashtags</th>
-				          <th data-field='email'>Delete</th>
+				          <th data-field='usernames'>Username</th>
+				          <th data-field='tweets'>Tweet</th>
+				          <th data-field='hashtags'>Hashtags</th>
+				          <th data-field='likes'>Likes</th>
+				          <th data-field='likeButtons'></th>
+				          <th data-field='delete'>Delete</th>
 				      </tr>
 				    </thead>";
             echo "<div class='list-group'>";
@@ -104,7 +106,13 @@
 
 				}
                 echo "</td>";
-                echo "<td><a class='btn btn-danger' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
+                echo "<td>".$row[4]."</td>";
+                echo "<td><a class='waves-effect waves-light btn'><i class='material-icons left'>thumb_up</i></a></td>";
+                if ($arr[1] == $row[3]) {
+                	echo "<td><a class='waves-effect waves-light btn' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
+            	} else {
+            		echo "<td><a class='btn disabled'>Delete</a></td>";
+            	}
                 echo "</tr>";
             }
             echo "</tbody>";
@@ -186,14 +194,16 @@
 	            <input id='hashtag' class='form-control' type="text" name="animal">
 <!-- 	            </div> -->
 				<label for='hashtag'>Your Hashtags Here (Seperate By Space)</label>
-	            <input class='btn btn-success' type="submit" name="submit">
+	            <button class="btn waves-effect waves-light" type="submit" name="submit">Submit
+    <i class="material-icons right">send</i>
+  </button>
 	            </div>
 	        </form>
 	    </div>
 	</div>
     <br>
     <center>
-    	<form action="logout.php" method="post"><button class="btn btn-danger">Logout</button></form>
+    	<form action="logout.php" method="post"><button class="btn waves-effect waves-light">Logout</button></form>
     </center>
     
 	</body>

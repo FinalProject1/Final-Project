@@ -16,3 +16,23 @@ h4 {
 	margin-right: 0;
 	font-weight: bold;
 }
+body{
+background: #607D8B;
+}
+table{
+background: rgba(0,0,0,0.1);
+margin-top: 60px;
+}
+table thead{
+border-bottom: 1px solid rgba(255,255,255,0.1);
+color: #fff;
+}
+table tbody{
+color: rgba(255,255,255,0.8);
+}
+table.striped > tbody > tr:nth-child(odd){
+background: #03A9F4;
+}
+table td:first-child, table th:first-child{
+padding-left: 10px;
+}

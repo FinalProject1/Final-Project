@@ -78,48 +78,77 @@
 
 		// see if any rows were returned
 		if (mysqli_num_rows($result) > 0) {
-    		// print them one after another
-    		echo "<div class='container'>";
-            echo "<div class='panel panel-default'>";
-            echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>New Tweets:</font></h3></div>";
-            echo "<table class='highlight' class='responsive-table striped' id='myTable'>";
-            echo "<thead>
-				      <tr>
-				          <th data-field='usernames'>Username</th>
-				          <th data-field='tweets'>Tweet</th>
-				          <th data-field='hashtags'>Hashtags</th>
-				          <th data-field='likes'>Likes</th>
-				          <th data-field='likeButtons'></th>
-				          <th data-field='delete'>Delete</th>
-				      </tr>
-				    </thead>";
-            echo "<div class='list-group'>";
-            echo "<tbody>";
-            while($row = mysqli_fetch_row($result)) {
-                echo "<tr>";
-                echo "<td>".$row[3]."</td>";
-                echo "<td>" . $row[1]."</td>";
-                $hashtags = explode(" ", $row[2]);
-                echo "<td>";
-                for ($i = 0; $i < sizeof($hashtags); $i++) {
+			$counter = 1;
+			while($row = mysqli_fetch_row($result)) {
+                
+                echo "<div class='container'>";
+				echo "<div class='row'>";
+				echo "<div class='card'>";
+				echo "<div class='card-content'>";
+				echo "<span class='card-title'>".$row[3]."</span>";
+				echo "<p>".$row[1]."</p>";
+				echo "</div>";
+				echo "<div class='card-action'>";
+				echo "<td><btn class='waves-effect waves-light btn'><i class='material-icons left'>thumb_up</i> ".$row[4]."</btn></td>";
+				echo "   ";
+				if ($arr[1] == $row[3]) {
+                	echo "<a class='waves-effect waves-light btn' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a>";
+            	} else {
+            		echo "<a class='btn disabled'>Delete</a>";
+            	}
+            	echo "<br/><br/>";
+            	$hashtags = explode(" ", $row[2]);
+            	for ($i = 0; $i < sizeof($hashtags); $i++) {
 					echo "<div class='chip'>".$hashtags[$i]."</div>";
 
 				}
-                echo "</td>";
-                echo "<td>".$row[4]."</td>";
-                echo "<td><a class='waves-effect waves-light btn'><i class='material-icons left'>thumb_up</i></a></td>";
-                if ($arr[1] == $row[3]) {
-                	echo "<td><a class='waves-effect waves-light btn' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
-            	} else {
-            		echo "<td><a class='btn disabled'>Delete</a></td>";
-            	}
-                echo "</tr>";
+				echo "</div>";
+				echo "</div>";
+				echo "</div>";
+				echo "</div>";
+
             }
-            echo "</tbody>";
-            echo "</div>";
-            echo "</table>";
-            echo "</div>";
-            echo "</div>";
+    		// print them one after another
+    // 		echo "<div class='container'>";
+    //         echo "<div class='panel panel-default'>";
+    //         echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>New Tweets:</font></h3></div>";
+    //         echo "<table class='highlight' class='responsive-table striped' id='myTable'>";
+    //         echo "<thead>
+				//       <tr>
+				//           <th data-field='usernames'>Username</th>
+				//           <th data-field='tweets'>Tweet</th>
+				//           <th data-field='hashtags'>Hashtags</th>
+				//           <th data-field='likes'>Likes</th>
+				//           <th data-field='delete'>Delete</th>
+				//       </tr>
+				//     </thead>";
+    //         echo "<div class='list-group'>";
+    //         echo "<tbody>";
+    //         while($row = mysqli_fetch_row($result)) {
+    //             echo "<tr>";
+    //             echo "<td>".$row[3]."</td>";
+    //             echo "<td>" . $row[1]."</td>";
+    //             $hashtags = explode(" ", $row[2]);
+    //             echo "<td>";
+    //             for ($i = 0; $i < sizeof($hashtags); $i++) {
+				// 	echo "<div class='chip'>".$hashtags[$i]."</div>";
+
+				// }
+    //             echo "</td>";
+
+    //             echo "<td><btn class='waves-effect waves-light btn'><i class='material-icons left'>thumb_up</i> ".$row[4]."</btn></td>";
+    //             if ($arr[1] == $row[3]) {
+    //             	echo "<td><a class='waves-effect waves-light btn' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
+    //         	} else {
+    //         		echo "<td><a class='btn disabled'>Delete</a></td>";
+    //         	}
+    //             echo "</tr>";
+    //         }
+    //         echo "</tbody>";
+    //         echo "</div>";
+    //         echo "</table>";
+    //         echo "</div>";
+    //         echo "</div>";
 
 		} else {
 			
@@ -135,6 +164,7 @@
 		$country = $_POST['country'];
         $animal = $_POST['animal'];
         $search = $_POST['filter'];
+        $id = $arr[0];
         
         // check to see if user has entered anything
         if ($search != "") {
@@ -146,7 +176,7 @@
             echo "<meta http-equiv='refresh' content='0'>";
         } else if ($animal != "") {
             // build SQL query
-            $query = "INSERT INTO symbols (Name, country, animal) VALUES ('$name', '$country', '$animal')";
+            $query = "INSERT INTO symbols (Name, country, animal, likewho) VALUES ('$name', '$country', '$animal', '$id')";
             // run the query
             $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
             // refresh the page to show new update

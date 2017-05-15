@@ -1,101 +1,49 @@
 <html>
 
 	<head>
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		
 
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<!--Import Google Icon Font-->
+	    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" type="text/css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="supplement.css">
+	    <!--Import materialize.css-->
+	    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
-		<style>
-			h3 { 
-			    display: block;
-			    font-size: 3em;
-			    margin-top: 1em;
-			    margin-bottom: 1em;
-			    margin-left: 0;
-			    margin-right: 0;
-			    font-weight: bold;
-			}
-			h4 { 
-			    display: block;
-			    font-size: 8em;
-			    margin-top: 1em;
-			    margin-bottom: 1em;
-			    margin-left: 0;
-			    margin-right: 0;
-			    font-weight: bold;
-			}
-		</style>
-
-		<nav class="navbar navbar-inverse navbar-static-top">
-		  <div class="container-fluid">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="navbar-brand" href="#">Brand</a>
-		    </div>
-
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <ul class="nav navbar-nav">
-		        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-		        <li><a href="#">Link</a></li>
-		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-		          <ul class="dropdown-menu">
-		            <li><a href="#">Action</a></li>
-		            <li><a href="#">Another action</a></li>
-		            <li><a href="#">Something else here</a></li>
-		            <li role="separator" class="divider"></li>
-		            <li><a href="#">Separated link</a></li>
-		            <li role="separator" class="divider"></li>
-		            <li><a href="#">One more separated link</a></li>
-		          </ul>
-		        </li>
-		      </ul>
-		      <form class="navbar-form navbar-left">
-		        <div class="form-group">
-		          <input type="text" class="form-control" placeholder="Search">
-		        </div>
-		        <button type="submit" class="btn btn-success">Submit</button>
-		      </form>
-		      <ul class="nav navbar-nav navbar-right">
-		        <li><a href="#">Link</a></li>
-		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-		          <ul class="dropdown-menu">
-		            <li><a href="#">Action</a></li>
-		            <li><a href="#">Another action</a></li>
-		            <li><a href="#">Something else here</a></li>
-		            <li role="separator" class="divider"></li>
-		            <li><a href="#">Separated link</a></li>
-		          </ul>
-		        </li>
-		      </ul>
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
-		</nav>
-
+	    <!--Let browser know website is optimized for mobile-->
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script type="text/javascript" src="search.js"></script>
+		<script type="text/javascript" src="split.js"></script>
+		
+		<div class="navbar-fixed">   
+			<nav>
+		    	<div class="nav-wrapper">
+		      		<form>
+		        		<div class="input-field">
+		          		<input id="filter" type="search" placeholder="Search Hashtags" onkeyup="myFunction()" required>
+		          		<label class="label-icon" for="filter"><i class="material-icons">search</i></label>
+		          		<i class="material-icons">close</i>
+		        		</div>
+		      		</form>
+		    	</div>
+			</nav>
+		</div>
 	</head>
 	<body>
+    <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
     
-     
+      
 
 	<?php
-	
+		
 	    // pass in some info;
 		require("common.php"); 
 		
 		if(empty($_SESSION['user'])) { 
   
 			// If they are not, we redirect them to the login page. 
-			$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+			$location = "http://" . $_SERVER['HTTP_HOST'] . "Final-Project/login.php";
 			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
 			//exit;
          
@@ -106,16 +54,15 @@
 		
 		// To access $_SESSION['user'] values put in an array, show user his username
 		$arr = array_values($_SESSION['user']);
-		echo "<br><br><br>";
+		echo "<br>";
 		echo "<center>";
 		echo "<h3 class='panel-title'>";
-		echo "<font size='8' color='black'>Welcome " . $arr[1] . "</font>";
+		echo "<font size='8' color='black'>Welcome, " . $arr[1] . "</font>";
 		echo "</h3>";
 		echo "</center>";
 
 		echo "<br>";
 		
-
 
 
 		// open connection
@@ -132,21 +79,36 @@
 
 		// see if any rows were returned
 		if (mysqli_num_rows($result) > 0) {
-
     		// print them one after another
     		echo "<div class='container'>";
             echo "<div class='panel panel-default'>";
-            echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>Countries And Animals</font></h3></div>";
-            echo "<table class='table table-hover'>";
+            echo "<div class='panel-heading'><h3 class='panel-title'><font size='4'>New Tweets:</font></h3></div>";
+            echo "<table class='highlight' class='responsive-table striped' id='myTable'>";
+            echo "<thead>
+				      <tr>
+				          <th data-field='sn'>Username</th>
+				          <th data-field='name'>Tweet</th>
+				          <th data-field='address'>Hashtags</th>
+				          <th data-field='email'>Delete</th>
+				      </tr>
+				    </thead>";
             echo "<div class='list-group'>";
+            echo "<tbody>";
             while($row = mysqli_fetch_row($result)) {
                 echo "<tr>";
-                echo "<td>".$row[0]."</td>";
+                echo "<td>".$row[3]."</td>";
                 echo "<td>" . $row[1]."</td>";
-                echo "<td>".$row[2]."</td>";
+                $hashtags = explode(" ", $row[2]);
+                echo "<td>";
+                for ($i = 0; $i < sizeof($hashtags); $i++) {
+					echo "<div class='chip'>".$hashtags[$i]."</div>";
+
+				}
+                echo "</td>";
                 echo "<td><a class='btn btn-danger' href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
                 echo "</tr>";
             }
+            echo "</tbody>";
             echo "</div>";
             echo "</table>";
             echo "</div>";
@@ -162,19 +124,29 @@
 		mysqli_free_result($connection,$result);
 
 		// set variable values to HTML form inputs
+		$name = $arr[1];
 		$country = $_POST['country'];
         $animal = $_POST['animal'];
+        $search = $_POST['filter'];
         
         // check to see if user has entered anything
-        if ($animal != "") {
+        if ($search != "") {
             // build SQL query
-            $query = "INSERT INTO symbols (country, animal) VALUES ('$country', '$animal')";
+            $query = "SELECT * FROM symbols where animal like filter%";
+            // run the query
+            $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
+            // refresh the page to show new update
+            echo "<meta http-equiv='refresh' content='0'>";
+        } else if ($animal != "") {
+            // build SQL query
+            $query = "INSERT INTO symbols (Name, country, animal) VALUES ('$name', '$country', '$animal')";
             // run the query
             $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysqli_error());
             // refresh the page to show new update
             echo "<meta http-equiv='refresh' content='0'>";
         }
 		
+
 		// if DELETE pressed, set an id, if id is set then delete it from DB
 		if (isset($_GET['id'])) {
 
@@ -195,6 +167,7 @@
 		// close connection
 		mysqli_close($connection);
 
+
 	?>
    
 
@@ -203,9 +176,19 @@
    	<div class="form-inline">
 	   	<div class="container">
 	        <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-	            <input class='form-control' placeholder='Your Tweet Here' type="text" name="country">
-	            <input class='form-control' placeholder='Your Hashtags Here' type="text" name="animal">
+	        	<label class="label-icon" for="tweet"><i class="material-icons">forum</i></label>
+	        	<div class='input-field'>
+	            <input id='tweet' class='form-control' type="text" name="country">
+	            <label for='tweet'>Your Tweet Here</label>
+	            </div>
+	            <label class="label-icon" for="hashtag"><i class="material-icons">turned_in_not</i></label>
+	            <div class='input-field'>
+<!-- 	            <div name='animal' id='hashtag' class='chips'> -->
+	            <input id='hashtag' class='form-control' type="text" name="animal">
+<!-- 	            </div> -->
+				<label for='hashtag'>Your Hashtags Here (Seperate By Space)</label>
 	            <input class='btn btn-success' type="submit" name="submit">
+	            </div>
 	        </form>
 	    </div>
 	</div>
@@ -215,4 +198,5 @@
     </center>
     
 	</body>
+	<script>$('.chips').material_chip();</script>
 </html>
